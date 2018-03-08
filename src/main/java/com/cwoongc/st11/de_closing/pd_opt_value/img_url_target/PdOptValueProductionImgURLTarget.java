@@ -30,7 +30,7 @@ public class PdOptValueProductionImgURLTarget extends ImgURLTarget {
 
     @Override
     public String getUpdateSql() {
-        return "update pd_prd_opt_value\n" +
+        return "update pd_opt_value\n" +
                 "set dgst_ext_nm = ?,\n" +
                 "    update_dt = sysdate,\n" +
                 "    update_no = 10000276\n" +

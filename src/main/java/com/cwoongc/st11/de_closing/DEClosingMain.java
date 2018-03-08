@@ -4,6 +4,7 @@ import com.cwoongc.st11.de_closing.common.DesignEditorClosingURLReplacer;
 import com.cwoongc.st11.de_closing.pd_opt_dtl_image.downloader.PdOptDtlImageImgDownLoader;
 import com.cwoongc.st11.de_closing.pd_opt_dtl_image.img_url_source.PdOptDtlImageLocalImgURLSource;
 import com.cwoongc.st11.de_closing.pd_opt_dtl_image.img_url_source.PdOptDtlImageProductionImgURLSource;
+import com.cwoongc.st11.de_closing.pd_opt_dtl_image.img_url_source.PdOptDtlImageProductionTestImgURLSource;
 import com.cwoongc.st11.de_closing.pd_opt_dtl_image.img_url_source.PdOptDtlImageStageImgURLSource;
 import com.cwoongc.st11.de_closing.pd_opt_dtl_image.img_url_target.*;
 import com.cwoongc.st11.de_closing.pd_opt_dtl_image.migrator.PdOptDtlImageURLDataMigrator;
@@ -11,6 +12,7 @@ import com.cwoongc.st11.de_closing.pd_opt_dtl_image.plan_generator.PdOptDtlImage
 import com.cwoongc.st11.de_closing.pd_opt_value.downloader.PdOptValueImgDownLoader;
 import com.cwoongc.st11.de_closing.pd_opt_value.img_url_source.PdOptValueLocalImgURLSource;
 import com.cwoongc.st11.de_closing.pd_opt_value.img_url_source.PdOptValueProductionImgURLSource;
+import com.cwoongc.st11.de_closing.pd_opt_value.img_url_source.PdOptValueProductionTestImgURLSource;
 import com.cwoongc.st11.de_closing.pd_opt_value.img_url_source.PdOptValueStageImgURLSource;
 import com.cwoongc.st11.de_closing.pd_opt_value.img_url_target.*;
 import com.cwoongc.st11.de_closing.pd_opt_value.migrator.PdOptValueURLDataMigrator;
@@ -18,6 +20,7 @@ import com.cwoongc.st11.de_closing.pd_opt_value.plan_generator.PdOptValuePlanGen
 import com.cwoongc.st11.de_closing.pd_prd_desc.downloader.PdPrdDescImgDownLoader;
 import com.cwoongc.st11.de_closing.pd_prd_desc.img_url_source.PdPrdDescLocalImgURLSource;
 import com.cwoongc.st11.de_closing.pd_prd_desc.img_url_source.PdPrdDescProductionImgURLSource;
+import com.cwoongc.st11.de_closing.pd_prd_desc.img_url_source.PdPrdDescProductionTestImgURLSource;
 import com.cwoongc.st11.de_closing.pd_prd_desc.img_url_source.PdPrdDescStageImgURLSource;
 import com.cwoongc.st11.de_closing.pd_prd_desc.img_url_target.*;
 import com.cwoongc.st11.de_closing.pd_prd_desc.migrator.PdPrdDescURLDataMigrator;
@@ -177,16 +180,16 @@ public class DEClosingMain {
 
                 ArrayList<ImgMigrationPrototypeFactory> factories = new ArrayList<ImgMigrationPrototypeFactory>();
 
-                ImgMigrationPrototypeFactory<PdPrdDescPlanGenerator, PdPrdDescProductionImgURLSource, DesignEditorClosingURLReplacer, PdPrdDescImgDownLoader, PdPrdDescProductionTestImgURLTarget, PdPrdDescURLDataMigrator> pdPrdDesc = new ImgMigrationPrototypeFactory<PdPrdDescPlanGenerator, PdPrdDescProductionImgURLSource, DesignEditorClosingURLReplacer, PdPrdDescImgDownLoader,PdPrdDescProductionTestImgURLTarget, PdPrdDescURLDataMigrator>(
-                        PdPrdDescPlanGenerator.class, PdPrdDescProductionImgURLSource.class, DesignEditorClosingURLReplacer.class, PdPrdDescImgDownLoader.class, PdPrdDescProductionTestImgURLTarget.class, PdPrdDescURLDataMigrator.class, ctx
+                ImgMigrationPrototypeFactory<PdPrdDescPlanGenerator, PdPrdDescProductionTestImgURLSource, DesignEditorClosingURLReplacer, PdPrdDescImgDownLoader, PdPrdDescProductionTestImgURLTarget, PdPrdDescURLDataMigrator> pdPrdDesc = new ImgMigrationPrototypeFactory<PdPrdDescPlanGenerator, PdPrdDescProductionTestImgURLSource, DesignEditorClosingURLReplacer, PdPrdDescImgDownLoader,PdPrdDescProductionTestImgURLTarget, PdPrdDescURLDataMigrator>(
+                        PdPrdDescPlanGenerator.class, PdPrdDescProductionTestImgURLSource.class, DesignEditorClosingURLReplacer.class, PdPrdDescImgDownLoader.class, PdPrdDescProductionTestImgURLTarget.class, PdPrdDescURLDataMigrator.class, ctx
                 );
 
-                ImgMigrationPrototypeFactory<PdOptValuePlanGenerator, PdOptValueProductionImgURLSource, DesignEditorClosingURLReplacer, PdOptValueImgDownLoader, PdOptValueProductionTestImgURLTarget, PdOptValueURLDataMigrator> pdOptValue = new ImgMigrationPrototypeFactory<PdOptValuePlanGenerator, PdOptValueProductionImgURLSource, DesignEditorClosingURLReplacer, PdOptValueImgDownLoader, PdOptValueProductionTestImgURLTarget, PdOptValueURLDataMigrator>(
-                        PdOptValuePlanGenerator.class, PdOptValueProductionImgURLSource.class, DesignEditorClosingURLReplacer.class, PdOptValueImgDownLoader.class, PdOptValueProductionTestImgURLTarget.class, PdOptValueURLDataMigrator.class, ctx
+                ImgMigrationPrototypeFactory<PdOptValuePlanGenerator, PdOptValueProductionTestImgURLSource, DesignEditorClosingURLReplacer, PdOptValueImgDownLoader, PdOptValueProductionTestImgURLTarget, PdOptValueURLDataMigrator> pdOptValue = new ImgMigrationPrototypeFactory<PdOptValuePlanGenerator, PdOptValueProductionTestImgURLSource, DesignEditorClosingURLReplacer, PdOptValueImgDownLoader, PdOptValueProductionTestImgURLTarget, PdOptValueURLDataMigrator>(
+                        PdOptValuePlanGenerator.class, PdOptValueProductionTestImgURLSource.class, DesignEditorClosingURLReplacer.class, PdOptValueImgDownLoader.class, PdOptValueProductionTestImgURLTarget.class, PdOptValueURLDataMigrator.class, ctx
                 );
 
-                ImgMigrationPrototypeFactory<PdOptDtlImagePlanGenerator, PdOptDtlImageProductionImgURLSource, DesignEditorClosingURLReplacer, PdOptDtlImageImgDownLoader, PdOptDtlImageProductionTestImgURLTarget, PdOptDtlImageURLDataMigrator> pdOptDtlImage = new ImgMigrationPrototypeFactory<PdOptDtlImagePlanGenerator, PdOptDtlImageProductionImgURLSource, DesignEditorClosingURLReplacer, PdOptDtlImageImgDownLoader,PdOptDtlImageProductionTestImgURLTarget, PdOptDtlImageURLDataMigrator>(
-                        PdOptDtlImagePlanGenerator.class, PdOptDtlImageProductionImgURLSource.class, DesignEditorClosingURLReplacer.class, PdOptDtlImageImgDownLoader.class, PdOptDtlImageProductionTestImgURLTarget.class, PdOptDtlImageURLDataMigrator.class, ctx
+                ImgMigrationPrototypeFactory<PdOptDtlImagePlanGenerator, PdOptDtlImageProductionTestImgURLSource, DesignEditorClosingURLReplacer, PdOptDtlImageImgDownLoader, PdOptDtlImageProductionTestImgURLTarget, PdOptDtlImageURLDataMigrator> pdOptDtlImage = new ImgMigrationPrototypeFactory<PdOptDtlImagePlanGenerator, PdOptDtlImageProductionTestImgURLSource, DesignEditorClosingURLReplacer, PdOptDtlImageImgDownLoader,PdOptDtlImageProductionTestImgURLTarget, PdOptDtlImageURLDataMigrator>(
+                        PdOptDtlImagePlanGenerator.class, PdOptDtlImageProductionTestImgURLSource.class, DesignEditorClosingURLReplacer.class, PdOptDtlImageImgDownLoader.class, PdOptDtlImageProductionTestImgURLTarget.class, PdOptDtlImageURLDataMigrator.class, ctx
                 );
 
                 factories.add(pdPrdDesc);
