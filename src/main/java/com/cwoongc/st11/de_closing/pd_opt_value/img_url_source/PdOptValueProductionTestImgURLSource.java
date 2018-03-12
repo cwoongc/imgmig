@@ -29,6 +29,21 @@ public class PdOptValueProductionTestImgURLSource extends ImgURLSource {
 
     @Override
     public String getExtractingSql() {
+//        return "select p.sel_mnbd_no\n" +
+//                "    ,v.prd_no\n" +
+//                "    ,v.opt_item_no\n" +
+//                "    ,v.opt_value_no\n" +
+//                "    ,v.dgst_ext_nm\n" +
+//                "from pd_prd p, pd_opt_item i, dev_pub.temp$pd_opt_value_0308_bak v\n" +
+//                "where exists(select 1 from tmall.pd_smt_edtr_page g where g.prd_no = p.prd_no)\n" +
+//                "    and p.sel_stat_cd in ('102','103','104','105')\n" +
+//                "    and p.prd_no = i.prd_no\n" +
+//                "    and i.opt_item_no = 1\n" +
+//                "    and i.prd_no = v.prd_no\n" +
+//                "    and v.opt_item_no = 1\n" +
+//                "    and v.dgst_ext_nm is not null"
+//                +"\n  and p.prd_no in (1974188916,1990696445,1898214660,1613022788,1980759047)";
+
         return "select p.sel_mnbd_no\n" +
                 "    ,v.prd_no\n" +
                 "    ,v.opt_item_no\n" +
@@ -36,11 +51,12 @@ public class PdOptValueProductionTestImgURLSource extends ImgURLSource {
                 "    ,v.dgst_ext_nm\n" +
                 "from pd_prd p, pd_opt_item i, dev_pub.temp$pd_opt_value_0308_bak v\n" +
                 "where exists(select 1 from tmall.pd_smt_edtr_page g where g.prd_no = p.prd_no)\n" +
-                "    and p.sel_stat_cd in ('102','103','104')\n" +
+                "    and p.sel_stat_cd in ('102','103','104','105')\n" +
                 "    and p.prd_no = i.prd_no\n" +
                 "    and i.opt_item_no = 1\n" +
                 "    and i.prd_no = v.prd_no\n" +
                 "    and v.opt_item_no = 1\n" +
-                "    and v.dgst_ext_nm is not null";
+                "    and v.dgst_ext_nm is not null"
+                ;
     }
 }

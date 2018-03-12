@@ -30,6 +30,25 @@ public class PdPrdDescProductionTestImgURLSource extends ImgURLSource {
 
     @Override
     public String getExtractingSql() {
+
+//        return "select a.prd_no\n" +
+//                "    ,a.sel_mnbd_no\n" +
+//                "    ,c.prd_desc_no\n" +
+//                "    ,c.prd_desc_typ_cd\n" +
+//                "    ,c.prd_dtl_typ_cd\n" +
+//                "    ,c.prd_desc_cont_clob\n" +
+//                "from pd_prd a, dev_pub.temp$pd_prd_desc_0308_bak c, (select prd_no from tmall.PD_SMT_EDTR_PAGE b group by prd_no) b\n" +
+//                "where 1=1\n" +
+//                "    and b.prd_no = a.prd_no\n" +
+//                "    and a.sel_stat_cd in ('102','103','104','105')\n" +
+//                "    and a.prd_no = c.prd_no\n" +
+//                "    and (\n" +
+//                "       (c.prd_dtl_typ_cd in ('09','10','11','12') and c.prd_desc_typ_cd in ('02','14'))\n" +
+//                "       or (c.prd_dtl_typ_cd is null and c.prd_desc_typ_cd in ('12','13','15','16'))\n" +
+//                "       )\n" +
+//                "    and c.clob_typ_yn = 'Y'"
+//                +"\n  and a.prd_no in (1974188916,1990696445,1898214660,1613022788,1980759047)";
+
         return "select a.prd_no\n" +
                 "    ,a.sel_mnbd_no\n" +
                 "    ,c.prd_desc_no\n" +
@@ -39,10 +58,12 @@ public class PdPrdDescProductionTestImgURLSource extends ImgURLSource {
                 "from pd_prd a, dev_pub.temp$pd_prd_desc_0308_bak c, (select prd_no from tmall.PD_SMT_EDTR_PAGE b group by prd_no) b\n" +
                 "where 1=1\n" +
                 "    and b.prd_no = a.prd_no\n" +
-                "    and a.sel_stat_cd in ('102','103','104')\n" +
+                "    and a.sel_stat_cd in ('102','103','104','105')\n" +
                 "    and a.prd_no = c.prd_no\n" +
-                "    and c.prd_dtl_typ_cd in ('09','10','11','12')\n" +
-                "    and c.prd_desc_typ_cd in ('02','12','13','14','15','16')\n" +
+                "    and (\n" +
+                "       (c.prd_dtl_typ_cd in ('09','10','11','12') and c.prd_desc_typ_cd in ('02','14'))\n" +
+                "       or (c.prd_dtl_typ_cd is null and c.prd_desc_typ_cd in ('12','13','15','16'))\n" +
+                "       )\n" +
                 "    and c.clob_typ_yn = 'Y'";
     }
 }

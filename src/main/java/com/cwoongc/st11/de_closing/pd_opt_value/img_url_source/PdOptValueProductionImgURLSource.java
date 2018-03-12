@@ -36,7 +36,7 @@ public class PdOptValueProductionImgURLSource extends ImgURLSource {
                 "    ,v.dgst_ext_nm\n" +
                 "from pd_prd p, pd_opt_item i, pd_opt_value v\n" +
                 "where exists(select 1 from tmall.pd_smt_edtr_page g where g.prd_no = p.prd_no)\n" +
-                "    and p.sel_stat_cd in ('102','103','104')\n" +
+                "    and p.sel_stat_cd in ('102','103','104','105')\n" +
                 "    and p.prd_no = i.prd_no\n" +
                 "    and i.opt_item_no = 1\n" +
                 "    and i.prd_no = v.prd_no\n" +

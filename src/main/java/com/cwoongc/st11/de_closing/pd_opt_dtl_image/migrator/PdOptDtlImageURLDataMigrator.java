@@ -3,6 +3,8 @@ package com.cwoongc.st11.de_closing.pd_opt_dtl_image.migrator;
 import com.cwoongc.st11.image_migrator.exception.URLDataMigrationException;
 import com.cwoongc.st11.image_migrator.img_url_target.ImgURLTarget;
 import com.cwoongc.st11.image_migrator.migrator.URLDataMigrator;
+import com.cwoongc.st11.image_migrator.plan.PlanItemListProcessor;
+import com.cwoongc.st11.image_migrator.plan.PlanItemListProcessorLogic;
 import com.cwoongc.st11.image_migrator.plan.PlanItemProcessor;
 import com.cwoongc.st11.image_migrator.plan.PlanItemProcessorLogic;
 import com.google.gson.Gson;
@@ -15,6 +17,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -101,6 +105,90 @@ public class PdOptDtlImageURLDataMigrator extends URLDataMigrator{
                 }
 
                 return updatedRow;
+            }
+        });
+    }
+
+    @Override
+    protected PlanItemListProcessor createMigrationPlanItemListProcessor(List<String> planItemList, final Connection conn, final PreparedStatement ps) {
+        return new PlanItemListProcessor(planItemList, new PlanItemListProcessorLogic() {
+            @Override
+            public List<Object> processPlanItemList(List<String> planItemList) {
+
+                int[] updatedRows = null;
+
+
+                try {
+
+                    for(String planItem : planItemList) {
+
+
+                        String[] cols = planItem.split("[\t]");
+                        String prdNo = cols[0];
+                        String selMnbdNo = cols[1];
+                        String optItemNo = cols[2];
+                        String optValueNo = cols[3];
+                        String dtlExtNmJson = cols[4];
+
+                        Map<String, String> dtlExtNmMap = gson.fromJson(dtlExtNmJson, new TypeToken<Map<String, String>>() {
+                        }.getType());
+
+                        if (dtlExtNmMap.get("dtl1_ext_nm") == null) ps.setNull(1, Types.NULL);
+                        else ps.setString(1, dtlExtNmMap.get("dtl1_ext_nm"));
+
+                        if (dtlExtNmMap.get("dtl2_ext_nm") == null) ps.setNull(2, Types.NULL);
+                        else ps.setString(2, dtlExtNmMap.get("dtl2_ext_nm"));
+
+                        if (dtlExtNmMap.get("dtl3_ext_nm") == null) ps.setNull(3, Types.NULL);
+                        else ps.setString(3, dtlExtNmMap.get("dtl3_ext_nm"));
+
+                        if (dtlExtNmMap.get("dtl4_ext_nm") == null) ps.setNull(4, Types.NULL);
+                        else ps.setString(4, dtlExtNmMap.get("dtl4_ext_nm"));
+
+                        if (dtlExtNmMap.get("dtl5_ext_nm") == null) ps.setNull(5, Types.NULL);
+                        else ps.setString(5, dtlExtNmMap.get("dtl5_ext_nm"));
+
+                        ps.setLong(6, Long.parseLong(prdNo));
+                        ps.setLong(7, Long.parseLong(optItemNo));
+                        ps.setLong(8, Long.parseLong(optValueNo));
+
+                        ps.addBatch();
+
+                    }
+                    updatedRows = ps.executeBatch();
+
+                    conn.commit();
+
+                } catch (SQLException e) {
+                    log.error(e.getMessage(),e);
+
+                    try {
+                        conn.rollback();
+                    } catch (SQLException e1) {
+                        log.error(e1.getMessage(),e1);
+                    }
+
+                    throw new URLDataMigrationException(e.getMessage(),e);
+                } finally {
+                    if(ps!=null) try {ps.close();} catch (SQLException e) {
+                        log.error(e.getMessage(),e);
+                    }
+                    if(conn!=null) {
+                        try {
+                            conn.close();
+                        } catch (SQLException e) {
+                            log.error(e.getMessage(),e);
+                        }
+                    }
+                }
+
+                List<Object> ret = new ArrayList<>();
+
+                for(int rows: updatedRows) {
+                    ret.add(rows);
+                }
+
+                return ret;
             }
         });
     }

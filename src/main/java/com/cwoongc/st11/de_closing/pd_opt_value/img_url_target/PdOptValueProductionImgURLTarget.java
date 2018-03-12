@@ -33,7 +33,7 @@ public class PdOptValueProductionImgURLTarget extends ImgURLTarget {
         return "update pd_opt_value\n" +
                 "set dgst_ext_nm = ?,\n" +
                 "    update_dt = sysdate,\n" +
-                "    update_no = 10000276\n" +
+                "    update_no = -10\n" +
                 "where prd_no = ?\n" +
                 "    and opt_item_no = ?\n" +
                 "    and opt_value_no = ?\n";

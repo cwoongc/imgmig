@@ -29,14 +29,15 @@ public class PdOptDtlImageProductionTestImgURLTarget extends ImgURLTarget {
 
     @Override
     public String getUpdateSql() {
-        return "update dev_pub.temp$pd_opt_dtl_image_0308\n" +
+        return
+                "update dev_pub.temp$pd_opt_dtl_image_0309\n" +
                 "set dtl1_ext_nm = ?,\n" +
                 "    dtl2_ext_nm = ?,\n" +
                 "    dtl3_ext_nm = ?,\n" +
                 "    dtl4_ext_nm = ?,\n" +
                 "    dtl5_ext_nm = ?,\n" +
                 "    update_dt = sysdate,\n" +
-                "    update_no = 10000276\n" +
+                "    update_no = -10\n" +
                 "where prd_no = ?\n" +
                 "    and opt_item_no = ?\n" +
                 "    and opt_value_no = ?";

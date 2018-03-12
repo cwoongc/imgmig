@@ -36,7 +36,7 @@ public class PdOptDtlImageProductionImgURLTarget extends ImgURLTarget {
                 "    dtl4_ext_nm = ?,\n" +
                 "    dtl5_ext_nm = ?,\n" +
                 "    update_dt = sysdate,\n" +
-                "    update_no = 10000276\n" +
+                "    update_no = -10\n" +
                 "where prd_no = ?\n" +
                 "    and opt_item_no = ?\n" +
                 "    and opt_value_no = ?";

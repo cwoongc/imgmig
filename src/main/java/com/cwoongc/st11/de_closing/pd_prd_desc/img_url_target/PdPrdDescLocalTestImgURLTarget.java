@@ -30,7 +30,15 @@ public class PdPrdDescLocalTestImgURLTarget extends ImgURLTarget {
 
     @Override
     public String getUpdateSql() {
-        return "update temp$pd_prd_desc_0306\n" +
+//        return "update temp$pd_prd_desc_0306\n" +
+//                "set prd_dtl_typ_cd = ?,\n" +
+//                "    prd_desc_cont_clob = ?,\n" +
+//                "    update_dt = sysdate,\n" +
+//                "    update_no = 10000276\n" +
+//                "where prd_desc_no = ?";
+
+
+        return "update temp$pd_prd_desc\n" +
                 "set prd_dtl_typ_cd = ?,\n" +
                 "    prd_desc_cont_clob = ?,\n" +
                 "    update_dt = sysdate,\n" +

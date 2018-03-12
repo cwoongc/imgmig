@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile({"stage-all","stage-all-test","stage-download-test","stage-mig-test"})
+@Profile({"local-all","local-all-test","stage-all","stage-all-test","stage-download-test","stage-mig-test"})
 public class DesignEditorClosingStageResourceAddress implements ResourceAddress {
     @Override
     public String getImgServerProtocolAndAuthority() {

@@ -60,7 +60,7 @@ public class ImageMigrator {
             URLDataMigrator urlDataMigrator = factory.createURLDataMigrator(planFiles.get(p-1)[1]);
 
             log.info(String.format("***** 3.%d.1. URL data is being migrated [%s] [begin]",p,urlDataMigrator.getClass().getSimpleName()));
-            urlDataMigrator.migrate(3);
+            urlDataMigrator.migrateList(6);
             log.info(String.format("***** 3.%d.2. URL data is being migrated [%s] [done]",p,urlDataMigrator.getClass().getSimpleName()));
         }
 
