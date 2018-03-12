@@ -57,35 +57,40 @@ public class PdOptValuePlanGenerator extends PlanGenerator {
         try {
             String dgstExtNm = rs.getString("dgst_ext_nm");
 
-            if(dgstExtNm != null && !dgstExtNm.isEmpty()) {
+            if(dgstExtNm != null) {
 
-                Long selMnbdNo = rs.getLong("sel_mnbd_no");
-                Long prdNo = rs.getLong("prd_no");
-                Long optItemNo = rs.getLong("opt_item_no");
-                Long optValueNo = rs.getLong("opt_value_no");
+                String checkString = dgstExtNm.replaceAll("[\\s]","").trim();
 
-                String filepath = urlReplacer.getImgFilePath(dgstExtNm, getLastGenDate(), selMnbdNo);
+                if(!checkString.isEmpty()) {
 
-                if(filepath == null) return null;
+                    Long selMnbdNo = rs.getLong("sel_mnbd_no");
+                    Long prdNo = rs.getLong("prd_no");
+                    Long optItemNo = rs.getLong("opt_item_no");
+                    Long optValueNo = rs.getLong("opt_value_no");
 
-                sb = new StringBuilder();
+                    String filepath = urlReplacer.getImgFilePath(dgstExtNm, getLastGenDate(), selMnbdNo);
 
-                sb.append(selMnbdNo);
-                sb.append('\t');
+                    if (filepath == null) return null;
 
-                sb.append(prdNo);
-                sb.append('\t');
+                    sb = new StringBuilder();
 
-                sb.append(optItemNo);
-                sb.append('\t');
+                    sb.append(selMnbdNo);
+                    sb.append('\t');
 
-                sb.append(optValueNo);
-                sb.append('\t');
+                    sb.append(prdNo);
+                    sb.append('\t');
 
-                sb.append(dgstExtNm);
-                sb.append('\t');
+                    sb.append(optItemNo);
+                    sb.append('\t');
 
-                sb.append(filepath);
+                    sb.append(optValueNo);
+                    sb.append('\t');
+
+                    sb.append(dgstExtNm.replaceAll("[\t\n\r]", ""));
+                    sb.append('\t');
+
+                    sb.append(filepath);
+                }
             } else return null;
 
             planItem = sb.toString();

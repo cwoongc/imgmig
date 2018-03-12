@@ -49,7 +49,7 @@ public class ImageMigrator {
             ImgDownLoader imgDownLoader = factory.createImgDownLoader(planFiles.get(p-1)[0]);
 
             log.info(String.format("***** 2.%d.1. Images downloading [%s] [begin]",p,imgDownLoader.getClass().getSimpleName()));
-            imgDownLoader.download(8);
+            imgDownLoader.download(10);
             log.info(String.format("***** 2.%d.2. Images downloading [%s] [done]",p,imgDownLoader.getClass().getSimpleName()));
         }
 

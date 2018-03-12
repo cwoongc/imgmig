@@ -44,6 +44,7 @@ public class PdOptValueImgDownLoader extends ImgDownLoader{
 
 
                 String urlStr = cols[4];
+                urlStr = urlStr.replaceAll("[\t\n\r]","");
                 String filepath = cols[5];
 
                 try {

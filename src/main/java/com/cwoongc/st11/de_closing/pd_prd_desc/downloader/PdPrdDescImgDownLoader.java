@@ -4,7 +4,9 @@ import com.cwoongc.st11.image_migrator.downloader.ImgDownLoader;
 import com.cwoongc.st11.image_migrator.plan.PlanItemProcessor;
 import com.cwoongc.st11.image_migrator.plan.PlanItemProcessorLogic;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.MalformedJsonException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -39,50 +41,56 @@ public class PdPrdDescImgDownLoader extends ImgDownLoader {
 
                 String imgUrlsJson = cols[5];
 
-                List<UrlFilepath> urlFilepathList = getGson().fromJson(imgUrlsJson, new TypeToken<List<UrlFilepath>>(){}.getType());
+                try {
 
-                for(UrlFilepath urlFilepath : urlFilepathList) {
-                    String urlStr = urlFilepath.getUrl();
-                    String filepath = urlFilepath.getFilepath();
+                    List<UrlFilepath> urlFilepathList = getGson().fromJson(imgUrlsJson, new TypeToken<List<UrlFilepath>>() {
+                    }.getType());
 
-                    try {
-                        URL url = new URL(urlStr);
+                    for (UrlFilepath urlFilepath : urlFilepathList) {
+                        String urlStr = urlFilepath.getUrl();
+                        String filepath = urlFilepath.getFilepath();
 
-                        URLConnection conn = url.openConnection();
-                        conn.setDoInput(true);
+                        try {
+                            URL url = new URL(urlStr);
 
-                        File parentDir = new File(filepath.substring(0,filepath.lastIndexOf("/")));
-                        parentDir.mkdirs();
+                            URLConnection conn = url.openConnection();
+                            conn.setDoInput(true);
 
-                        try (
-                                InputStream is = conn.getInputStream();
-                                BufferedInputStream bis = new BufferedInputStream(is);
-                                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filepath,false))) {
+                            File parentDir = new File(filepath.substring(0, filepath.lastIndexOf("/")));
+                            parentDir.mkdirs();
 
-                            byte[] b = new byte[1024];
+                            try (
+                                    InputStream is = conn.getInputStream();
+                                    BufferedInputStream bis = new BufferedInputStream(is);
+                                    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filepath, false))) {
 
-                            int readBytes = 0;
+                                byte[] b = new byte[1024];
 
-                            while((readBytes = bis.read(b,0,b.length))!= -1) {
+                                int readBytes = 0;
 
-                                bos.write(b,0,readBytes);
+                                while ((readBytes = bis.read(b, 0, b.length)) != -1) {
+
+                                    bos.write(b, 0, readBytes);
+                                }
+
+                                bos.flush();
+
+                            } catch (IOException e) {
+                                log.error("Image downloading error occurred : " + urlStr + " : " + e.getMessage(), e);
+                                continue;
                             }
 
-                            bos.flush();
-
+                        } catch (MalformedURLException e) {
+                            log.error("Image downloading error occurred : " + urlStr + " : " + e.getMessage(), e);
+                            continue;
                         } catch (IOException e) {
-                            log.error("Image downloading error occurred : "+ urlStr + " : "  + e.getMessage(), e);
+                            log.error("Image downloading error occurred : " + urlStr + " : " + e.getMessage(), e);
                             continue;
                         }
 
-                    } catch (MalformedURLException e) {
-                        log.error("Image downloading error occurred : "+ urlStr + " : "  + e.getMessage(), e);
-                        continue;
-                    } catch (IOException e) {
-                        log.error("Image downloading error occurred : "+ urlStr + " : "  + e.getMessage(), e);
-                        continue;
                     }
-
+                } catch (JsonSyntaxException e) {
+                    log.error("Image downloading error occurred : "+ "prd_desc_no : [" + cols[2] + "], Json : " + imgUrlsJson + " : " + e.getMessage(), e);
                 }
                 return null;
             }

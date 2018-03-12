@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -151,10 +152,16 @@ public class PdPrdDescURLDataMigrator extends URLDataMigrator{
                             ps.setString(1, newPrdDtlTypCd);
                         }
 
-                        Clob html = conn.createClob();
-                        html.setString(1, prdDescContClob);
+                        if(prdDescContClob.equals("null")) {
+                            ps.setNull(2, Types.NULL);
+                        } else {
+                            Clob html = conn.createClob();
+                            html.setString(1, prdDescContClob);
 
-                        ps.setClob(2, html);
+                            ps.setClob(2, html);
+                        }
+
+
                         ps.setLong(3, Long.parseLong(prdDescNo));
 
                         ps.addBatch();

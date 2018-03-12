@@ -77,11 +77,13 @@ public class PdOptDtlImagePlanGenerator extends PlanGenerator {
                 String imgUrl = rs.getString(columnLabel);
                 Map<String,String> urlFilepath = new HashMap<>();
 
-                if(imgUrl == null || imgUrl.isEmpty()) { // 컬럼이 비었다.
+                if(imgUrl == null || imgUrl.replaceAll("[\\s]","").trim().isEmpty()) { // 컬럼이 비었다.
 
                     imgUrlmap.put(columnLabel, null); // 해당 컬럼은 다운로드 대상이 아니다. 컬럼명과 null 기록
 
                 } else {
+                    imgUrl = imgUrl.replaceAll("[\t\n\r]","");
+
                     String filepath = urlReplacer.getImgFilePath(imgUrl, getLastGenDate(), selMnbdNo);
 
                     if(filepath == null) { //대상 url이 아니다.

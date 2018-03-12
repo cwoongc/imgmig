@@ -93,7 +93,7 @@ public class PdPrdDescPlanGenerator extends PlanGenerator {
                         if(filepath != null) {
                             if(sb2.length() > 1) sb2.append(',');
 
-                            sb2.append(String.format(imgJsonObjFormat,attr,filepath));
+                            sb2.append(String.format(imgJsonObjFormat,attr.replaceAll("[\t\n\r]",""),filepath));
                         }
 
                     }
@@ -144,58 +144,65 @@ public class PdPrdDescPlanGenerator extends PlanGenerator {
         try {
             String prdDescContClob = rs.getString("prd_desc_cont_clob");
 
-            if(prdDescContClob != null && !prdDescContClob.isEmpty()) {
+            Long prdNo = rs.getLong("prd_no");
+            Long selMnbdNo = rs.getLong("sel_mnbd_no");
+            Long prdDescNo = rs.getLong("prd_desc_no");
+            String prdDescTypCd = rs.getString("prd_desc_typ_cd");
+            String prdDtlTypCd = rs.getString("prd_dtl_typ_cd");
+            String html = "null";
 
-                Long prdNo = rs.getLong("prd_no");
-                Long selMnbdNo = rs.getLong("sel_mnbd_no");
-                Long prdDescNo = rs.getLong("prd_desc_no");
-                String prdDescTypCd = rs.getString("prd_desc_typ_cd");
-                String prdDtlTypCd = rs.getString("prd_dtl_typ_cd");
+            if(prdDescContClob != null ) {
 
-                String html = prdDescContClob.replaceAll("[\t\n\r]","");
+                String checkString = prdDescContClob.replaceAll("[\\s]","");
 
-                Document doc = Jsoup.parse(html);
-                Elements imgs = doc.getElementsByTag("img");
+                if(!checkString.isEmpty()) {
 
-//                int cnt = 0;
+                    html = prdDescContClob.replaceAll("[\t\n\r]", "");
 
-                for (Element img : imgs) {
+                    Document doc = Jsoup.parse(html);
+                    Elements imgs = doc.getElementsByTag("img");
 
-                    String[] attrs = {"src", "data-original"};
+//                      int cnt = 0;
 
-                    for(int i=0;i<attrs.length;i++) {
-                        String attr = img.attr(attrs[i]);
+                    for (Element img : imgs) {
 
-                        String newUrl = urlReplacer.replaceImgUrl(attr,getLastGenDate(), selMnbdNo);
+                        String[] attrs = {"src", "data-original"};
 
-                        if(newUrl != null) {
-                            html = html.replace(attr, newUrl);
+                        for (int i = 0; i < attrs.length; i++) {
+                            String attr = img.attr(attrs[i]);
+
+                            String newUrl = urlReplacer.replaceImgUrl(attr, getLastGenDate(), selMnbdNo);
+
+                            if (newUrl != null) {
+                                html = html.replace(attr, newUrl);
 //                            cnt++;
+                            }
                         }
                     }
                 }
+            }
 
-//                if(cnt == 0) return null;
 
-                sb = new StringBuilder();
+//            if(cnt == 0) return null;
 
-                sb.append(prdNo);
-                sb.append('\t');
+            sb = new StringBuilder();
 
-                sb.append(selMnbdNo);
-                sb.append('\t');
+            sb.append(prdNo);
+            sb.append('\t');
 
-                sb.append(prdDescNo);
-                sb.append('\t');
+            sb.append(selMnbdNo);
+            sb.append('\t');
 
-                sb.append(prdDescTypCd);
-                sb.append('\t');
+            sb.append(prdDescNo);
+            sb.append('\t');
 
-                sb.append(prdDtlTypCd);
-                sb.append('\t');
+            sb.append(prdDescTypCd);
+            sb.append('\t');
 
-                sb.append(html);
-            } else return null;
+            sb.append(prdDtlTypCd);
+            sb.append('\t');
+
+            sb.append(html);
 
             planItem = sb.toString();
 
